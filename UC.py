@@ -37,7 +37,7 @@ if __name__ == '__main__':
         """ AV diz a mensagem de sucesso quando o objeto eh encontrado
         """
         if mayara.estado == Estado.OBJETO_ENCONTRADO:
-            mayara.reproduz_fala(Audio.OBJETO_ENCONTRADO)
+            mayara.reproduz_fala(Audio.OBJETO_EM_MIRA)
             mayara.volta_para_estado_inicial()
             mayara.objeto_em_mira = None
 

@@ -65,7 +65,7 @@ class Assistente:
             self.mao = ObjetoAvistado(coordenadas_mao)
         # Checa se a posição da mão sobrepõe o objeto (aqui eu assumo o objeto como estático)
         if self.mao.sobrepoe(self.objeto_em_mira):
-            self.fala.play(Audio.OBJETO_EM_MIRA)
+            #self.fala.play(Audio.OBJETO_EM_MIRA)
             return True
         else:
             if self.mao.esta_esquerda(self.objeto_em_mira):

@@ -51,6 +51,7 @@ class ReconhecedorObjetos:
         # Libera a camera para demais usos
         self.cam.release()
 
+
     def encontrar_mao(self) -> tuple:
         """
         Encontra mao na imagem fornecida pelo Opencv.
