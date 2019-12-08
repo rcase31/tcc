@@ -28,7 +28,7 @@ class Assistente:
     def __init__(self):
         self.estado = Estado.ESPERA
         self.fala = PlayerAudio()
-        self.olhos = ReconhecedorObjetos()
+        self.olhos = ReconhecedorObjetosOnline()
         self.objeto_em_mira = None
 
     def procura_objetos(self):

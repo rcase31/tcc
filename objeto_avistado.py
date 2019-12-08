@@ -13,7 +13,14 @@ TRADUCAO = {
     'traffic light': 'sinaleiro',
     'knife': 'faca',
     'donut': 'maçã',
-    'chair': 'cadeira'
+    'chair': 'cadeira',
+    #Saidas do Google
+    'Man': 'humano',
+    'Person': 'humano',
+    'Banana': 'banana',
+    'Apple': 'maçã',
+    'Bottle': 'garrafa',
+    'Mobile phone': 'celular'
 }
 
 #TODO: classe meio inútil. Pensar em talvez incluir apenas coordenadas aqui

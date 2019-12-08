@@ -2,7 +2,7 @@ from reproducao_audio import *
 from assistente import Assistente, Estado
 
 if __name__ == '__main__':
-    HOT_WORD = "Maiara"
+    HOT_WORDS = ['Maiara', 'Mayara']
 
     mayara = Assistente()
     while True:
@@ -10,7 +10,7 @@ if __name__ == '__main__':
         dira "bom dia"
         """
         if mayara.estado == Estado.ESPERA:
-            if mayara.aguarda_fala(HOT_WORD) == HOT_WORD:
+            if mayara.aguarda_fala(HOT_WORDS) is not None:
                 mayara.reproduz_fala(Audio.BOM_DIA)
                 mayara.avanca_estado()
         """ AV faz a leitura dos objetos a sua frente, e diz quais objetos ela viu."

@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import time
-
+import google_opencv
 
 def _get_output_layers(net):
     layer_names = net.getLayerNames()
@@ -38,6 +38,7 @@ class ReconhecedorObjetos:
         cv2.startWindowThread()
         # Leitura das classes do Yolo
         self.classes = None
+        self.encontrou_mao = False
         with open(self.Yclasses, 'r') as f:
             self.classes = [line.strip() for line in f.readlines()]
 
@@ -51,7 +52,6 @@ class ReconhecedorObjetos:
         # Libera a camera para demais usos
         self.cam.release()
 
-
     def encontrar_mao(self) -> tuple:
         """
         Encontra mao na imagem fornecida pelo Opencv.
@@ -59,7 +59,7 @@ class ReconhecedorObjetos:
         """
         ret, self.frame = self.cam.read()
         gray = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
-        hands = self.cascade.detectMultiScale(gray, 1.05, 3)
+        hands = self.cascade.detectMultiScale(gray, 1.05, 7)
 
         for (x, y, w, h) in hands:
             cv2.rectangle(self.frame, (x, y), (x + w, y + h), (255, 255, 0), 2)
@@ -67,11 +67,16 @@ class ReconhecedorObjetos:
             desenhar_quadro(self.frame, x, y, w, h, 'mao')
             # print(x, y, w, h, 'hand')
             self.mostrar_visao()
+            self.encontrou_mao = True
             return x, y, w, h, 'hand'
         self.mostrar_visao()
         return None
 
-    def encontrar_objetos(self):
+    def encontrar_objetos(self) -> list:
+        """
+        Encontra os objetos usando YOLO
+        :return:
+        """
         ret, self.frame = self.cam.read()
         largura = self.frame.shape[1]
         altura = self.frame.shape[0]
@@ -153,7 +158,7 @@ class ReconhecedorObjetos:
             contagem += 1
         return coordenadas_mao
 
-    def procurar_c_insistencia(self, insistencia: int = 5, quantidade_maxima: int = 1) -> tuple:
+    def procurar_c_insistencia(self, insistencia: int = 5, quantidade_maxima: int = 2) -> tuple:
         """
         Permite buscar objetos e maos com o fator de "bouncing" no reconhecimento. Insistencia representa a tolerancia
         a este fator.
@@ -178,3 +183,17 @@ class ReconhecedorObjetos:
             contagem += 1
 
         return saida_mao, saida_objetos
+
+
+class ReconhecedorObjetosOnline(ReconhecedorObjetos):
+    def encontrar_objetos(self) -> list:
+        """
+        Encontro objetos usando a API paga do Google Cloud Vision.
+        :return: uma lista de tuplas com a seguinte estrutura (x, y, w, h, nome em ingles).
+        """
+        #Peco para encontrar a mao primeiro para nao rodar a busca por imagens mais que uma vez, pois o metodo que chama
+        #este so retorna quando tanto mao quando objetos forem encontrados na visao da camera.
+        if self.encontrou_mao:
+            return google_opencv.localizar_objetos(self.frame)
+        else:
+            return []
