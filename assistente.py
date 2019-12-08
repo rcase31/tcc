@@ -52,7 +52,6 @@ class Assistente:
 
     def direciona(self) -> bool:
         """
-
         :return: retorna verdadeiro quando o objeto desejado estiver alinhado com a mão.
         """
         # Atualizo a posição da mão

@@ -2,7 +2,7 @@ from reproducao_audio import *
 from assistente import Assistente, Estado
 
 if __name__ == '__main__':
-    HOT_WORDS = ['Maiara', 'Mayara']
+    HOT_WORDS = ['Maiara', 'Mayara', 'Nayara']
 
     mayara = Assistente()
     while True:

@@ -39,7 +39,7 @@ def localizar_objetos(frame):
         print('Normalized bounding polygon vertices: ')
         label = o.name
         vertice_1 = o.bounding_poly.normalized_vertices[0]
-        vertice_2 = o.bounding_poly.normalized_vertices[-1]
+        vertice_2 = o.bounding_poly.normalized_vertices[2]
         x = vertice_1.x * dim_x
         y = vertice_1.y * dim_y
         w = vertice_2.x * dim_x - x
