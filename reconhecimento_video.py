@@ -3,6 +3,7 @@ import numpy as np
 import time
 import google_opencv
 
+
 def _get_output_layers(net):
     layer_names = net.getLayerNames()
     output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
@@ -186,13 +187,21 @@ class ReconhecedorObjetos:
 
 
 class ReconhecedorObjetosOnline(ReconhecedorObjetos):
+    def __init__(self):
+        self.cascade = cv2.CascadeClassifier('recursos\\palm_v4.xml')
+        # Ajusta configuracoes iniciais do OpenCV
+        self.cam = None
+        self.frame = None
+        cv2.startWindowThread()
+        self.encontrou_mao = False
+
     def encontrar_objetos(self) -> list:
         """
         Encontro objetos usando a API paga do Google Cloud Vision.
         :return: uma lista de tuplas com a seguinte estrutura (x, y, w, h, nome em ingles).
         """
-        #Peco para encontrar a mao primeiro para nao rodar a busca por imagens mais que uma vez, pois o metodo que chama
-        #este so retorna quando tanto mao quando objetos forem encontrados na visao da camera.
+        # Peco para encontrar a mao primeiro para nao rodar a busca por imagens mais que uma vez, pois o metodo que chama
+        # este so retorna quando tanto mao quando objetos forem encontrados na visao da camera.
         if self.encontrou_mao:
             return google_opencv.localizar_objetos(self.frame)
         else:

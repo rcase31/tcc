@@ -41,19 +41,3 @@ if __name__ == '__main__':
             mayara.volta_para_estado_inicial()
             mayara.objeto_em_mira = None
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
